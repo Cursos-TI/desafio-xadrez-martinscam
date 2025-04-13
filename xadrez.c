@@ -40,7 +40,7 @@ int main() {
             printf("Baixo\n");
             passosBaixo++;
         }
-
+        
         // Depois: mover 1 vez para a esquerda
         printf("Esquerda\n");
     }
