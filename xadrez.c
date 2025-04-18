@@ -1,52 +1,87 @@
 #include <stdio.h>
 
+// Função recursiva para o movimento da TORRE
+void moverTorre(int casasRestantes) {
+    if (casasRestantes <= 0) return;
+    printf("Direita\n");
+    moverTorre(casasRestantes - 1);
+}
+
+// Função recursiva + loops aninhados para o BISPO
+void moverBispo(int casasRestantes) {
+    if (casasRestantes <= 0) return;
+
+    // Loop externo: representa o movimento vertical (subida)
+    for (int movimentoVertical = 0; movimentoVertical < 1; movimentoVertical++) {
+        // Loop interno: representa o movimento horizontal (direita)
+        for (int movimentoHorizontal = 0; movimentoHorizontal < 1; movimentoHorizontal++) {
+            printf("Cima Direita\n");
+        }
+    }
+
+    moverBispo(casasRestantes - 1);
+}
+
+// Função recursiva para o movimento da RAINHA
+void moverRainha(int casasRestantes) {
+    if (casasRestantes <= 0) return;
+    printf("Esquerda\n");
+    moverRainha(casasRestantes - 1);
+}
+
 int main() {
-    // Movimento da TORRE: 5 casas para a direita, usando for
+    // ===================== TORRE ============================
     int movimentoTorre = 5;
     printf("Movimento da TORRE:\n");
-    for (int i = 1; i <= movimentoTorre; i++) {
-        printf("Direita\n");
-    }
+    moverTorre(movimentoTorre);
     printf("\n");
 
-    // Movimento do BISPO: 5 casas na diagonal para cima e à direita, usando while
+    // ===================== BISPO ============================
     int movimentoBispo = 5;
-    int casasBispo = 0; //usado para indicar quantas casas o bispo já andou
     printf("Movimento do BISPO:\n");
-    while (casasBispo < movimentoBispo) {
-        printf("Cima Direita\n");
-        casasBispo++; //indica que o bispo andou mais uma casa
-    }
+    moverBispo(movimentoBispo);
     printf("\n");
 
-    // Movimento da RAINHA: 8 casas para a esquerda, usando do-while
+    // ===================== RAINHA ===========================
     int movimentoRainha = 8;
-    int casasRainha = 0; //contagem de casas que a rainha já andou
     printf("Movimento da RAINHA:\n");
-    do { //iniciando a repetição
-        printf("Esquerda\n"); //mostra que ela se moveu para a esquerda
-        casasRainha++; //aumento das casas que a rainha andou
-    } while (casasRainha < movimentoRainha); //fim do laço
+    moverRainha(movimentoRainha);
     printf("\n");
 
-    // Movimento do CAVALO: 2 casas para baixo e 1 para a esquerda, usando loops aninhados
-    int movimentosCavalo = 1; // quantas vezes o movimento "L" será repetido
+    // ===================== CAVALO ===========================
+    /*
+     * Movimento em "L": 2 casas para cima e 1 para a direita
+     * Usando loops aninhados, múltiplas variáveis, break e continue
+    */
+    int movimentosCavalo = 2; // Quantas vezes o "L" será feito
     printf("Movimento do CAVALO:\n");
 
-    for (int i = 0; i < movimentosCavalo; i++) {
-        // Primeiro: mover 2 vezes para baixo
-        int passosBaixo = 0;
-        while (passosBaixo < 2) {
-            printf("Baixo\n");
-            passosBaixo++;
+    for (int repeticaoMovimentoL = 0; repeticaoMovimentoL < movimentosCavalo; repeticaoMovimentoL++) {
+        int totalPassos = 0;
+
+        for (int passoVertical = 0; passoVertical < 3; passoVertical++) {
+            if (passoVertical < 2) {
+                printf("Cima\n");
+                totalPassos++;
+            } else {
+                for (int passoHorizontal = 0; passoHorizontal < 2; passoHorizontal++) {
+                    if (passoHorizontal == 0) {
+                        printf("Direita\n");
+                        totalPassos++;
+                    } else {
+                        // Ignora movimentos extras, se houver
+                        continue;
+                    }
+
+                    if (totalPassos >= 3) break; // Evita excesso de movimentos
+                }
+            }
+
+            if (totalPassos >= 3) break; // Sai do laço externo também
         }
-        
-        // Depois: mover 1 vez para a esquerda
-        printf("Esquerda\n");
     }
 
     printf("\n");
 
     return 0;
 }
-
